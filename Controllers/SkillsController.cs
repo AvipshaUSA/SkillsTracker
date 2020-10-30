@@ -5,43 +5,45 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace SkillsTracker.Controllers
 {
-    //[Route("/skillstracker")]
+   
     public class SkillsController : Controller
     {
-       [HttpGet]
+      [HttpGet]
        [Route ("/skillstracker")]
             
         public IActionResult Index()
         {
-            string html = "<h1 >Skills Tracker </h1><h2>Coding skills to learn: </h2>" + "<form method = 'POST' action = '/skillstracker/'>"+ "<h2> <ol>  <li>C#</li> <li>JavaScript</li> <li>Python</li> ";
+            string html =  "<h1 >Skills Tracker </h1><h2>Coding skills to learn: </h2>" + "<h2> <ol>  <li>C#</li> " + " <br> " + "<li>JavaScript</li> " + " <br> " + "<li>Python</li>";
             return Content(html, "text/html"); 
         }
 
 
         
 
-        //[HttpGet("form/")]
-       // [HttpPost]
+        
       [HttpGet]
-      [Route("skillstracker/form")]
+      [Route("skillstracker/form")]      // in browser skillstracker/form
         public IActionResult Form()
         {
             string html =  "<form method = 'POST' action = '/skillstracker/form/'>" +
+               
                 "<p>Date:</p> "+
                 "<input type = 'date' name = 'date' /> " +
-                "<p>Name:</p> "+
-                "<input type = 'text' name = 'name'>"+
+                
                 "<p>C#</p>"+
-                "<Select name ='cSharp'><option value ='1'>Making Apps <option value = '2'>Learning Basics<option value = '3'>Master Code</option></select>" + 
+                "<Select name ='cSharp'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>" + " <br>" +
                 "<p>JavaScript</p>" +
-                "<Select name ='javaScript'><option value ='1'>Making Apps <option value = '2'>Learning Basics<option value = '3'>Master Code</option></select>" +
+                "<Select name ='javaScript'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>" + " <br>" +
                 "<p>Python</p>" +
-                "<Select name ='python'><option value ='1'>Making Apps <option value = '2'>Learning Basics<option value = '3'>Master Code</option></select>"
-                + "<input type = 'submit' value= 'submit!'  />" + 
+                "<Select name ='python'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>"+ " <br>" +
+
+                 "<input type = 'submit' value= 'submit!'  />" + " <br>" +
+              
                 "</form>";
       
 
@@ -49,60 +51,69 @@ namespace SkillsTracker.Controllers
         }
 
 
+       
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            // this post method is same for everyone for table() method and form() method
 
-        //[HttpGet]
-        
-         [HttpPost]
+
+            [HttpPost]
         [Route("skillstracker/form/")]
+        [HttpPost]
+        [Route("skillstracker/table/")]
 
-        public IActionResult Result(string name, string cSharp, string date , string javaScript, string python)
+        public IActionResult Form( string cSharp, string date , string javaScript, string python)
         {
-            if (cSharp == "1")
-                {
-                cSharp = "Making Apps";
-            }
-            else if(cSharp == "2")
-            {
-                cSharp = "Learning Basics";
-            }else if (cSharp == "3")
-            {
-                cSharp = "Master Code";
-            }
+            string html = "<center>" + " <h2> " + date + " </h2> " +
+                " <ol> " +
+                " <li> C#: " + cSharp + "</li>" +" <br>" +
+                "<li>Javascript: " + javaScript + "</li>" + " <br>" +
+                "<li>Python: " + python + "</li>" + " <br>" +
+                "</ol>" +"</center>";
 
 
-
-            if(javaScript == "1")
-            {
-                javaScript = "Making App";
-            }
-            else if (javaScript == "2")
-            {
-                javaScript = "Learning Basics";
-            }else if(javaScript == "3")
-            {
-                javaScript = "Master Code";
-            }
-
-      
-             if ( python == "1") 
-            {
-                python = "Making App";
-
-             }
-              else if (python == "2")
-              {
-               
-      
-                python = "Learning Basics";
-              }
-
-               else if (python == "3")
-               {
-                python = "Master Code";
-               }
             //return Content("<h1><p>Skill Tracker Of " + name+"!!</p></h1>" +"<h2>" + date +"</h2>" +"<p>"+"C#: " + cSharp + "</p>"+ "<p>Javascript: " + javaScript+ "</p>" + "<p>Python: " + python + "</p><br>"  , "text/html");
-            return Content("<h1><p>Skill Tracker Of " + name + "!!</p></h1>" + "<h2>" + date + "</h2>" + "<ol>" + "<li>C#: " + cSharp + "</li>" + "<li>Javascript: " + javaScript + "</li>" + "<li>Python: " + python + "</li></ol>", "text/html");
+            return Content(html, "text/html");
         }
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        [HttpGet]
+        [Route("skillstracker/table/")]  // in address bar    skillstracker/table
+        public IActionResult table()
+        {
+            string html = "<form method = 'POST' action = '/skillstracker/table/'>" +
+                "<table border = 2>" +
+                "<tr>" +
+                "<td>" + "Date: " + "</td>" +
+               "<td>"+ "<input type = 'date' name = 'date' /> " + "</td>" +
+               "</tr>"+ " <br>" +
+
+               "<tr>" +
+                "<td>" + "C#: " + "</td>" +
+               "<td>" + "<Select name ='cSharp'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>" + " </td>" +
+               "</tr>" + " <br>" +
+
+                 "<tr>" +
+                "<td>" + "Javascript: " + "</td>" +
+               "<td>" + "<Select name ='Javascript'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>" + " </td>" +
+               "</tr>" + " <br>" +
+
+
+                "<tr>" +
+                "<td>" + "Python: " + "</td>" +
+               "<td>" + "<Select name ='Javascript'><option value ='Making Apps'>Making Apps <option value = 'Learning Basics'>Learning Basics<option value = 'Master Code'>Master Code</option></select>" + " </td>" +
+               "</tr>" + " <br>" +
+
+                "</table>" +
+                 "<input type = 'submit' value= 'submit!'  />" +
+                "</form>";
+
+            ;
+            return Content(html, "text/html");
+        }
+
+
+
     }
-    
+
 }
